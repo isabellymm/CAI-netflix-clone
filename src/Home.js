@@ -30,10 +30,10 @@ export default function Home() {
         let html = []
 
         tvs?.genres.forEach(element => {
-            html.push(<p key={element.id}> 
+            html.push(<div key={element.id} className='tvs'> 
                         <p> <label>Id:</label> {element.id}</p>
                         <p> <label>Name:</label> {element.name}</p>
-                      </p>
+                      </div>
                      )
         });
 
@@ -50,7 +50,7 @@ export default function Home() {
             <h1>Teste</h1>
 
             {showTvs()}
-
+            
 
         </div>
     )
