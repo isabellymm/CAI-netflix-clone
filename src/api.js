@@ -1,17 +1,5 @@
-const API_KEY = '76bd8a2f7dd676fbf2a87971267b91e8'
-const DNS = 'https://api.themoviedb.org/3'
-
-export const getData = async (path) => {
-    try{
-
-        let URI = DNS + path
-        let result = await fetch(URI)
-        return result.json()    
-
-    } catch (error){
-        console.log(error)
-    }
-}
+const API_KEY = "76bd8a2f7dd676fbf2a87971267b91e8"
+const DNS = "https://api.themoviedb.org/3"
 
 export const categories = [
     {
@@ -47,8 +35,19 @@ export const categories = [
     {
         name: "documentaries",
         title: "Documentários",
-        path: "/discover/tv/api_key="+API_KEY+"&with_genres=99",
+        path: "/discover/tv?api_key="+API_KEY+"&with_genres=99",
         isLarge: false,
-    },
-
+    }
 ]
+
+export const getData = async (path) => {
+    try{
+        
+        let URI = DNS + path
+        let result = await fetch(URI)
+        return result.json()    
+
+    } catch (error){
+        console.log(error)
+    }
+}
