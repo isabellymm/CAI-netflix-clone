@@ -1,33 +1,48 @@
-import React, { useState } from 'react';
-import Login from './Login';
+import React, { useState, useEffect } from 'react';
+import { categories } from './api'; 
 import Row from './components/Row';
 import Banner from './components/Banner';
 import Nav from './components/Nav';
-import { categories } from './api';
-
+import './App.css';
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [categoryList, setCategoryList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const result = await categories(); 
+        if (Array.isArray(result)) {
+          setCategoryList(result);
+        } else {
+          console.error('Categories is not an array:', result);
+        }
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  if (!isLoggedIn) {
-    return <Login onLogin={handleLogin} />;
-  }
+    fetchCategories(); 
+  }, []);
 
   return (
-    <div>
+    <div className="app"> 
       <Nav />
       <Banner />
-      {categories.map((category) => (
-        <Row
-          key={category.name}
-          title={category.title}
-          isLarge={category.isLarge}
-          path={category.path}
-        />
-      ))}
+      {isLoading ? (
+        <p>Loading...</p> 
+      ) : (
+        categoryList.map((category) => (
+          <Row
+            key={category.name}
+            title={category.title}
+            isLarge={category.isLarge}
+            path={category.path}
+          />
+        ))
+      )}
     </div>
   );
 }

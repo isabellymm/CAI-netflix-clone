@@ -1,5 +1,5 @@
 .banner-container {
-    color: white;
+    color: black;
     object-fit: contain;
     height: 448px;
 }
@@ -32,7 +32,7 @@
 
 .banner-button {
     cursor: pointer;
-    color: #fff;
+    color: #000000;
     outline: none;
     font-weight: 700;
     border-radius: 0.2vw;

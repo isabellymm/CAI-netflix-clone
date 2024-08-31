@@ -1,49 +1,37 @@
-//Componente Inicial
-import { useEffect } from 'react';
-import '../frontend/Home.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { getData } from '../api';
+import './Home.css';
 
 export default function Home() {
-    const [tvs, setTVs] = useState()
+    const [tvs, setTVs] = useState();
 
-    let getData = async () => {
-        const API_KEY = "76bd8a2f7dd676fbf2a87971267b91e8"
-        let URI = 'https://api.themoviedb.org/3/genre/tv/list?api_key='+API_KEY
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await getData('/genre/tv/list');
+            setTVs(result);
+        };
+        fetchData();
+    }, []);
 
-        let data = await fetch(URI)
-        let result = data.json()
-        return result
-    }
-
-    useEffect(()=>{
-        getData().then((data)=>{
-            console.log(data)
-            setTVs(data)
-        })
-    },[])
-
-    let showTvs = () => {
-        let html = []
+    const showTvs = () => {
+        let html = [];
 
         tvs?.genres.forEach(element => {
-            html.push(<div key={element.id} className='tvs'>
-                <p> <label>Id:</label> {element.id}</p>
-                <p> <label>Name:</label> {element.name}</p>
-            </div>
-            )
+            html.push(
+                <div key={element.id} className='tvs'>
+                    <p><label>Id:</label> {element.id}</p>
+                    <p><label>Name:</label> {element.name}</p>
+                </div>
+            );
         });
 
-        return html
-    }
+        return html;
+    };
 
     return (
         <div>
-            {/*Navegar*/}
-            {/*Conteudo*/}
-            {/*Rodapé*/}
             <h1>Teste</h1>
             {showTvs()}
-
         </div>
-    )
+    );
 }
