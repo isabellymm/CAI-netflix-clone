@@ -1,37 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { getData } from '../api';
-import './Home.css';
+import React from 'react';
+import Row from './components/Row';
+import Banner from './components/Banner';
+import Nav from './components/Nav';
+import './App.css';
+import { categories } from './backend/api';
 
-export default function Home() {
-    const [tvs, setTVs] = useState();
+function Home() {
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const result = await getData('/genre/tv/list');
-            setTVs(result);
-        };
-        fetchData();
-    }, []);
+  return (
+    <div>
 
-    const showTvs = () => {
-        let html = [];
+    {/*Navbar*/}
+    {/*Banner*/}
+    {/*Categorias - Linhas*/}
 
-        tvs?.genres.forEach(element => {
-            html.push(
-                <div key={element.id} className='tvs'>
-                    <p><label>Id:</label> {element.id}</p>
-                    <p><label>Name:</label> {element.name}</p>
-                </div>
-            );
-        });
+    <Nav></Nav>
+    <Banner></Banner>
 
-        return html;
-    };
 
-    return (
-        <div>
-            <h1>Teste</h1>
-            {showTvs()}
-        </div>
-    );
+    {categories.map( (category) => {
+
+        return  <Row 
+                     key={category.name}
+                     title={category.title} 
+                     isLarge={category.isLarge}
+                     path={category.path}
+                />
+
+    })}
+
+</div>
+  );
 }
+
+export default Home;

@@ -1,49 +1,48 @@
 import React, { useState, useEffect } from 'react';
-import { categories } from './api'; 
-import Row from './components/Row';
-import Banner from './components/Banner';
-import Nav from './components/Nav';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import Login from './Login';
+import Home from './Home';
 import './App.css';
+
 function App() {
-  const [categoryList, setCategoryList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const checkAuth = async () => {
+      const token = localStorage.getItem('token');
+
       try {
-        const result = await categories(); 
-        if (Array.isArray(result)) {
-          setCategoryList(result);
+        const response = await fetch('http://localhost:5000/api/tmdb/categories', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`, 
+          },
+        });
+
+        if (response.status === 401 || response.status === 403) {
+          setIsAuthenticated(false);
         } else {
-          console.error('Categories is not an array:', result);
+          setIsAuthenticated(true);
         }
       } catch (error) {
-        console.error('Error fetching categories:', error);
-      } finally {
-        setIsLoading(false);
+        console.error('Error checking auth:', error);
       }
     };
 
-    fetchCategories(); 
+    checkAuth();
   }, []);
 
   return (
-    <div className="app"> 
-      <Nav />
-      <Banner />
-      {isLoading ? (
-        <p>Loading...</p> 
-      ) : (
-        categoryList.map((category) => (
-          <Row
-            key={category.name}
-            title={category.title}
-            isLarge={category.isLarge}
-            path={category.path}
-          />
-        ))
-      )}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/home"
+          element={isAuthenticated ? <Home /> : <Navigate to="/login" />}
+        />
+        <Route path="*" element={<Navigate to="/login" />} />
+      </Routes>
+    </Router>
   );
 }
 

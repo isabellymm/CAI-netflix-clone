@@ -3,6 +3,11 @@
     color: white;
 }
 
+.movie-card:hover {
+    transform: scale(1.1);
+    transition: transform 450ms;
+}
+
 .row-cards::-webkit-scrollbar {
     display: none;
 }
@@ -28,8 +33,4 @@
     max-height: 250px;
     margin-bottom: 10px;
     transition: transform 450ms;
-}
-
-.movie-card:hover {
-    transform: scale(1.08);
 }

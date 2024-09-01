@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import './Row.css'
-import {getData} from '../api'
+import {getData} from '../backend/api'
 import { useState } from 'react'
 
 export default function Row({title, path, isLarge}) {
@@ -24,7 +24,7 @@ export default function Row({title, path, isLarge}) {
         })
 
 
-    }, [])
+    })
 
     return (
         <div className='row-container'>
