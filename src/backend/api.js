@@ -119,8 +119,10 @@ export const getDataRating = async (movies, age) => {
       }
 
       const movieDetailsResponse = await response.json();
-      const certification = movieDetailsResponse.releases.countries.find(c => c.certification)?.certification || 'N/A';
-
+      const preferredCountries = ['US', 'BR', 'GB']; 
+      const certification = movieDetailsResponse.releases.countries
+        .sort((a, b) => preferredCountries.indexOf(a.iso_3166_1) - preferredCountries.indexOf(b.iso_3166_1))
+        .find(c => c.certification)?.certification || 'N/A';
       
       return {
         ...movie,
@@ -132,7 +134,7 @@ export const getDataRating = async (movies, age) => {
 
     const filteredMoviesByAge = validMovies.filter(movie => {
       const movieCertification = parseInt(movie.certification);
-      return isNaN(movieCertification) || movieCertification <= 10;
+      return isNaN(movieCertification) || movieCertification <= age;
     });
     console.log(filteredMoviesByAge)
     return filteredMoviesByAge;
