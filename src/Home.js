@@ -4,7 +4,7 @@ import Row from './components/Row';
 import Banner from './components/Banner';
 import Nav from './components/Nav';
 import './App.css';
-import { categories, categoriesAdult } from './backend/api';
+import { categories} from './backend/api';
 
 function Home() {
   const [userAge, setUserAge] = useState(null);
@@ -23,13 +23,12 @@ function Home() {
     return <div>Loading...</div>;
   }
 
-  const a = userAge < 18 ? categories : categoriesAdult;
   return (
     <div>
       <Nav></Nav>
       <Banner></Banner>
 
-      {a.map((category) => {
+      {categories.map((category) => {
         return <Row
           key={category.name}
           title={category.title}

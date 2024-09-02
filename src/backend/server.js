@@ -40,7 +40,7 @@ const authenticateJWT = (req, res, next) => {
     id: 1,
     email: 'teste',
     password: bcrypt.hashSync('password', 8), 
-    age: 15
+    age: 20
   }
 ];
 

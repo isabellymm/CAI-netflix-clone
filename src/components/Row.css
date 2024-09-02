@@ -1,28 +1,58 @@
 .row-container {
     margin-left: 20px;
     color: white;
+    position: relative; 
 }
 
-.movie-card:hover {
-    transform: scale(1.1);
-    transition: transform 450ms;
+.row-navigation {
+    display: flex;
+    align-items: center;
+    position: relative;
 }
 
-.row-cards::-webkit-scrollbar {
-    display: none;
+.scroll-button {
+    background-color: rgba(119, 106, 106, 0);
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 24px;
+    height: 100%;
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+}
+
+.scroll-button.left {
+    left: 0;
+}
+
+.scroll-button.right {
+    right: 0;
 }
 
 .row-cards {
     display: flex;
     overflow-y: hidden;
     overflow-x: scroll;
-    padding: 20px; 
+    padding: 10px;
+    gap: 10px;
+    scroll-behavior: smooth;
+}
+
+.row-cards::-webkit-scrollbar {
+    display: none;
 }
 
 .movie-card {
-    object-fit: contain;
-    width: 100%;
-    max-height: 100px;
+    object-fit:contain;
+    width: 250px; 
+    max-height: 230px;
     margin-bottom: 10px;
     transition: transform 450ms;
 }
